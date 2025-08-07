@@ -14,8 +14,10 @@
  * }
  */
 class Solution {
+    int ans = 0;
     public int maxSumBST(TreeNode root) {
-        return ValidBST(root).ans;
+        ValidBST(root);
+        return ans;
     }
     public BstPair ValidBST(TreeNode root){
         if (root == null){
@@ -29,10 +31,7 @@ class Solution {
         sbp.sum = lbp.sum+rbp.sum+root.val;
         sbp.isbst=lbp.isbst && rbp.isbst && lbp.max < root.val && rbp.min > root.val;
         if (sbp.isbst){
-            sbp.ans = Math.max(lbp.ans,Math.max(rbp.ans,sbp.sum));
-        }
-        else{
-            sbp.ans = Math.max(lbp.ans,rbp.ans);
+           ans = Math.max(ans,sbp.sum);
         }
         return sbp;
     }
@@ -41,6 +40,6 @@ class Solution {
         long max = Long.MIN_VALUE;
         long min = Long.MAX_VALUE;
         int sum = 0;
-        int ans = 0; // only max bst sum
+        //int ans = 0; // only max bst sum
     }
 }
