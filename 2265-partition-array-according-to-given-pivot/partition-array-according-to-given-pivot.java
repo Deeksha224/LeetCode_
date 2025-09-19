@@ -1,29 +1,51 @@
+// class Solution {
+//     public int[] pivotArray(int[] nums, int pivot) {
+//        ArrayList<Integer> less = new ArrayList<>();
+//        ArrayList<Integer> equal = new ArrayList<>();
+//        ArrayList<Integer> greater = new ArrayList<>();
+//        for(int i = 0; i < nums.length; i++){
+//             if (nums[i] < pivot){
+//                 less.add(nums[i]);
+//             }
+//             if (nums[i] == pivot){
+//                 equal.add(nums[i]);
+//             }
+//             if(nums[i] > pivot){
+//                 greater.add(nums[i]);
+//             }
+//         }
+//         int[] num = new int[nums.length];
+//         for(int i = 0; i < less.size(); i++){
+//             num[i] = less.get(i);
+//         }
+//         for (int i = 0; i < equal.size(); i++){
+//             num[i+less.size()] = equal.get(i);
+//         }
+//         for (int i = 0; i < greater.size(); i++){
+//             num[i+less.size()+equal.size()] = greater.get(i);
+//         }
+//         return num;
+//     }
+// }
+
+
 class Solution {
     public int[] pivotArray(int[] nums, int pivot) {
-       ArrayList<Integer> less = new ArrayList<>();
-       ArrayList<Integer> equal = new ArrayList<>();
-       ArrayList<Integer> greater = new ArrayList<>();
-       for(int i = 0; i < nums.length; i++){
+       int[] res = new int[nums.length];
+       int l = 0;
+       int r = nums.length-1;
+       for (int i = 0, j = nums.length - 1; i < nums.length; i++,j--){
             if (nums[i] < pivot){
-                less.add(nums[i]);
+                res[l++] = nums[i];
             }
-            if (nums[i] == pivot){
-                equal.add(nums[i]);
-            }
-            if(nums[i] > pivot){
-                greater.add(nums[i]);
+            if (nums[j] > pivot){
+                res[r--] = nums[j];
             }
         }
-        int[] num = new int[nums.length];
-        for(int i = 0; i < less.size(); i++){
-            num[i] = less.get(i);
+        while (l <= r){
+         res[l++] = pivot;
         }
-        for (int i = 0; i < equal.size(); i++){
-            num[i+less.size()] = equal.get(i);
-        }
-        for (int i = 0; i < greater.size(); i++){
-            num[i+less.size()+equal.size()] = greater.get(i);
-        }
-        return num;
+        return res;
     }
+
 }
