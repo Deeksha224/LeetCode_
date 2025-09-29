@@ -23,27 +23,57 @@
 //     }
 // }
 
-class Solution {
+// class Solution {
+//     public int[] maxSlidingWindow(int[] nums, int k) {
+//         int ans[] = new int[nums.length-k+1];
+//         int p=0;
+//         Deque<Integer> dq = new ArrayDeque<>(); // this will store indexes
+//         for(int i=0;i<nums.length;i++){
+//             if(!dq.isEmpty() && dq.peekFirst() <= i-k){
+//                 dq.pollFirst();
+//             }
+
+//             while(!dq.isEmpty() && nums[i]>=nums[dq.peekLast()]){
+//                 dq.pollLast();
+//             }
+
+//             dq.offerLast(i);
+
+//             if(i >= k-1){ // for first window only
+//                 ans[p++]=nums[dq.peekFirst()];
+//             }
+//         }
+//         return ans; 
+//     }
+// }
+
+
+class Solution{
     public int[] maxSlidingWindow(int[] nums, int k) {
-        int ans[] = new int[nums.length-k+1];
-        int p=0;
-        Deque<Integer> dq = new ArrayDeque<>(); // this will store indexes
-        for(int i=0;i<nums.length;i++){
-            if(!dq.isEmpty() && dq.peekFirst()<=i-k){
-                dq.pollFirst();
+        int[] ans = new int[nums.length-k+1];
+        int[] pmax = new int[nums.length];
+        int[] smax = new int[nums.length];
+        pmax[0] = nums[0];
+        for (int i = 1; i < nums.length; i++){
+            if (i % k == 0){
+                pmax[i] = nums[i];
             }
-
-            while(!dq.isEmpty() && nums[i]>=nums[dq.peekLast()]){
-                dq.pollLast();
-            }
-
-            dq.offerLast(i);
-
-            if(i>=k-1){ // for first window only
-                ans[p++]=nums[dq.peekFirst()];
+            else{
+                pmax[i] = Math.max(pmax[i-1],nums[i]);
             }
         }
-
-        return ans; 
+        smax[nums.length-1] = nums[nums.length-1];
+        for (int i = nums.length-2; i >=0; i--){
+            if ((i+1) % k == 0){
+                smax[i] = nums[i];
+            }
+            else{
+                smax[i] = Math.max(smax[i+1],nums[i]);
+            }
+        }
+        for (int i = 0; i < ans.length; i++){
+            ans[i] = Math.max(smax[i],pmax[i+k-1]);
+        }
+        return ans;
     }
 }
