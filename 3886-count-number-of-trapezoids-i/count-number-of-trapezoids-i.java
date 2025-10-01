@@ -1,28 +1,32 @@
 class Solution {
-    public int countTrapezoids(int[][] points) {
-        final long MOD = 1_000_000_007L; // correct mod
-        Map<Integer, Integer> freq = new HashMap<>();
-
-        for (int[] p : points) {
-            freq.put(p[1], freq.getOrDefault(p[1], 0) + 1);
+    public int countTrapezoids(int[][] points) { 
+        //storing the frequency of y axis points in hashmap
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for (int[] point: points){
+            int p = point[1];
+            map.put(p,map.getOrDefault(p,0)+1);
         }
 
-        long sum = 0L;    // Σ comb % MOD
-        long sumSq = 0L;  // Σ (comb^2 % MOD)
-
-        for (int c : freq.values()) {
-            if (c >= 2) {
-                long comb = (long) c * (c - 1) / 2;
-                long combMod = comb % MOD;                    // reduce first
-                sum = (sum + combMod) % MOD;
-                sumSq = (sumSq + (combMod * combMod) % MOD) % MOD; // safe multiplication
+        // possible combinations nCr
+        ArrayList<Long> l = new ArrayList<>();
+        for (long c : map.values()){
+            if (c >= 2){
+                long ans = c * (c-1) / 2;
+                l.add(ans);
             }
         }
-
-        long res = (sum * sum % MOD - sumSq + MOD) % MOD;
-        long inv2 = (MOD + 1) / 2; // modular inverse of 2 when MOD is prime
-        res = res * inv2 % MOD;
-
-        return (int) res;
+        int mod=1000000007;
+        long sum = 0;
+        for (long val: l){
+            sum = (sum+val)%mod;
+        }
+        //System.out.print(sum);
+        
+        long res = 0;
+        for (long val: l){
+            sum = (sum - (val % mod)) % mod;
+            res = (res + (val % mod) * sum) % mod;
+        }
+        return (int)res;
     }
 }
