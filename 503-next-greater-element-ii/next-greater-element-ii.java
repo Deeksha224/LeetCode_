@@ -9,6 +9,7 @@ class Solution {
         for (int i = 0; i < 2*n; i++){
             while (!st.isEmpty() && nums[st.peek()] < nums[i%n]){
                 arr[st.pop()] = nums[i%n];
+                
             }
             if (i < n){
                 st.push(i);
