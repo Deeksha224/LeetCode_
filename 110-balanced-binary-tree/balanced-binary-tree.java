@@ -13,47 +13,20 @@
  *     }
  * }
  */
-// class Solution {
-//     public boolean isBalanced(TreeNode root) {
-//         if (root == null){
-//             return true;
-//         }
-//         int left_h = height(root.left);
-//         int right_h = height(root.right);
-//         if (Math.abs(left_h - right_h) > 1){
-//             return false;
-//         }
-//         return isBalanced(root.left) && isBalanced(root.right);
-
-//     }
-//     public int height (TreeNode root){
-//         if (root == null){
-//             return -1;
-//         }
-//         int left = height(root.left);
-//         int right = height(root.right);
-//         return Math.max(left,right)+1;
-//     }
-// }
-
 class Solution {
     public boolean isBalanced(TreeNode root) {
-        return balance(root).bal;
-    }
-    public Pair balance(TreeNode root){
-        if (root == null){
-            return new Pair();
+        if(root == null) return true;
+        int left_h = height(root.left);
+        int right_h = height(root.right);
+        if(Math.abs(left_h-right_h) > 1){
+            return false;
         }
-        Pair lb = balance(root.left);
-        Pair rb = balance(root.right);
-        Pair sp = new Pair();
-        sp.ht = Math.max(lb.ht, rb.ht)+1;
-        boolean sb = Math.abs(lb.ht-rb.ht)<=1;
-        sp.bal = lb.bal && rb.bal && sb;
-        return sp;
+        return isBalanced(root.left)&&isBalanced(root.right);
     }
-    class Pair{
-        boolean bal = true;
-        int ht = -1;
+    public int height(TreeNode root){
+        if (root == null) return 0;
+        int x = height(root.left);
+        int y = height(root.right);
+        return Math.max(x,y)+1;
     }
 }
