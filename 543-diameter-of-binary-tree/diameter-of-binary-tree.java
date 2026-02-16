@@ -36,25 +36,41 @@
 //     }
 // }
 
+// class Solution {
+//     public int diameterOfBinaryTree(TreeNode root) {
+//         return diameter(root).dt;
+//     }
+//     public Diapair diameter(TreeNode root){
+//         if (root == null){
+//             return new Diapair();
+//         }
+//         Diapair ldp = diameter(root.left); //left diapair
+//         Diapair rdp = diameter(root.right); // right diapair
+//         int sp = (ldp.ht + rdp.ht + 2); // self pair
+//         Diapair sdp = new Diapair(); // self diapair
+//         sdp.dt = Math.max(sp,Math.max(ldp.dt,rdp.dt));
+//         sdp.ht = Math.max(ldp.ht,rdp.ht)+1;
+//         return sdp;
+//     }
+//     class Diapair{
+//         int dt = 0; //diameter
+//         int ht = -1; //height
+//     }
+// }
+
 class Solution {
+    int ans = 0;
     public int diameterOfBinaryTree(TreeNode root) {
-        return diameter(root).dt;
+        fun(root);
+        return ans;
+
     }
-    public Diapair diameter(TreeNode root){
-        if (root == null){
-            return new Diapair();
-        }
-        Diapair ldp = diameter(root.left); //left diapair
-        Diapair rdp = diameter(root.right); // right diapair
-        int sp = (ldp.ht + rdp.ht + 2); // self pair
-        Diapair sdp = new Diapair(); // self diapair
-        sdp.dt = Math.max(sp,Math.max(ldp.dt,rdp.dt));
-        sdp.ht = Math.max(ldp.ht,rdp.ht)+1;
-        return sdp;
-    }
-    class Diapair{
-        int dt = 0; //diameter
-        int ht = -1; //height
+    public int fun(TreeNode root){
+        if(root == null) return 0;
+        int a = fun(root.left);
+        int b = fun(root.right);
+        ans = Math.max(ans, a+b);
+        return Math.max(a,b)+1;
     }
 }
 
