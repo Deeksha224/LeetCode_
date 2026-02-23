@@ -1,14 +1,16 @@
 class Solution {
-    public int binaryGap(int N) {
-        int[] A = new int[32];
-        int t = 0;
-        for (int i = 0; i < 32; ++i)
-            if (((N >> i) & 1) != 0)
-                A[t++] = i;
-
-        int ans = 0;
-        for (int i = 0; i < t - 1; ++i)
-            ans = Math.max(ans, A[i+1] - A[i]);
-        return ans;
+    public int binaryGap(int n) {
+        String s = Integer.toBinaryString(n);
+        int max = 0;
+        int prev = -1;
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '1'){
+                if(prev != -1){
+                    max = Math.max(max,i-prev);
+                }
+                prev=i;
+            }
+        }
+        return max;
     }
 }
