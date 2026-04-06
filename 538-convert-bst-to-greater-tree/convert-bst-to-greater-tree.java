@@ -19,8 +19,7 @@ class Solution {
         if(root==null) return null;
         l = new ArrayList<>();
         inorder(root, l); // Step 1: store values
-        Collections.sort(l); // Step 2: sort
-
+        //Collections.sort(l); // Step 2: sort
         int n = l.size();
         // Step 3: suffix sum
         ArrayList<Integer> suffix = new ArrayList<>(Collections.nCopies(n, 0));
@@ -36,7 +35,6 @@ class Solution {
         }
         // Step 5: update tree
         update(root, map);
-
         return root;
     }
 
