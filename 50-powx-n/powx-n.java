@@ -5,15 +5,14 @@ class Solution {
             x = 1/x;
             n = -n;
         }
-        double ans = 1;
-        while(n > 0){
-            if(n%2 != 0){
-                ans = ans*x;
-            }
-            x*=x;
-            n/=2;
-        }
-        return ans;
+        return pow(x,n,1);
         
     }
+    public double pow(double x, long n, double ans){
+        if(n==0) return ans;
+        if(n%2 != 0){
+             ans = ans*x;
+        }
+        return pow (x*x, n/2, ans);
+    } 
 }
