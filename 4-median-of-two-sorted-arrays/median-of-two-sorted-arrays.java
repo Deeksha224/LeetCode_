@@ -1,43 +1,34 @@
 class Solution {
-    public double findMedianSortedArrays(int[] a, int[] b) {
-        if (a.length > b.length){
-            int[] temp = a ;
-            a = b; 
-            b = temp;
-        }
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int total = m+n;
+        int pre = 0;
+        int cur = 0;
 
-        int start = 0;
-        int end = a.length;
-        int total = a.length+b.length;
-        int half = (total+1)/2;
+        int i = 0; 
+        int j = 0;
 
-        while (start <= end){
-            int al = (start + end)/2; // a left
-            int bl = half - al; // b left
-            int alm1 = (al == 0) ? Integer.MIN_VALUE: a[al-1]; // a left min -1
-            int aleft = (al == a.length) ? Integer.MAX_VALUE : a[al]; //a left
-            int blm1 = (bl == 0) ? Integer.MIN_VALUE: b[bl - 1]; // b rleft min -1
-            int bleft = (bl == b.length) ? Integer.MAX_VALUE : b[bl]; // b left
-
-
-            if (alm1 <= bleft && blm1 <= aleft){
-                double ans;
-                if (total % 2 == 0){
-                    ans = (Math.max(alm1,blm1) + Math.min(aleft,bleft))/2.0;
+        for(int count = 0; count <= total/2; count++){
+            pre = cur;
+            if(i < m && j < n){
+                if(nums1[i] <= nums2[j]){
+                    cur = nums1[i++];
                 }
                 else{
-                    ans = Math.max(alm1,blm1)/1.0;
+                    cur = nums2[j++];
                 }
-                return ans;
             }
-            else if (alm1 > bleft) {
-                end = al - 1;   // move left
+            else if(i < m){
+                cur = nums1[i++];
             }
-            else {
-                start = al + 1; // move right
+            else{
+                cur = nums2[j++];
             }
+        }
+        if(total%2 != 0) return cur;
+        return (pre+cur)/2.0;
 
-        } 
-        return -1;
+        
     }
 }
