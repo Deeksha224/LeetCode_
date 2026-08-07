@@ -1,29 +1,32 @@
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> li = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
         Arrays.sort(candidates);
-        answer(candidates,target,new ArrayList<>(), li,0);
-        return li;
+        fun(candidates,target,0,ans,res);
+        return res;
+
     }
-    public void answer(int[] candidates , int target, List<Integer> ans , List<List<Integer>> li, int ind){
-        if(target==0){
-            if(!li.contains(ans)){
-                li.add(new ArrayList<>(ans));
-            }
+    public void fun(int[] can, int target, int idx, List<Integer> ans, List<List<Integer>> res){
+        
+        if(target== 0){
+            res.add(new ArrayList(ans));
+            //System.out.println(ans);
             return;
         }
-        for(int i=ind ; i<candidates.length ; i++){
-            if(target-candidates[i]<0){
-                continue;
-            }
-            if(i>ind && candidates[i]==candidates[i-1]){
-                continue;
-            }
-            if(candidates[i]<=target){
-                ans.add(candidates[i]);
-                answer(candidates,target-candidates[i],ans,li,i+1);
+        for(int i = idx; i < can.length; i++){
+            
+            if(target >= can[i]){
+                if(i > idx && can[i] == can[i-1]){
+                    continue;
+                }
+                ans.add(can[i]);
+                fun(can,target-can[i],i+1,ans,res);
                 ans.remove(ans.size()-1);
             }
+            
         }
+        
+        
     }
 }
