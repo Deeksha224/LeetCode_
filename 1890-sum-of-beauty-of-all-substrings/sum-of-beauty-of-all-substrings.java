@@ -1,23 +1,42 @@
 class Solution {
     public int beautySum(String s) {
-        int ans = 0;
-        int n = s.length();
-        for (int i = 0; i < n; i++) {
+        return count(fun(s));
+    }
+
+    public int count(ArrayList<String> list){
+        int ans=0;
+        for(String str : list){
+            int min = Integer.MAX_VALUE;
+            int max = Integer.MIN_VALUE;
             int[] freq = new int[26];
-            for (int j = i; j < n; j++) {
-                freq[s.charAt(j) - 'a']++;
-                int min = Integer.MAX_VALUE;
-                int max = Integer.MIN_VALUE;
-                for (int k = 0; k < 26; k++) {
-                    if (freq[k] > 0) { 
-                        min = Math.min(min, freq[k]);
-                        max = Math.max(max, freq[k]);
-                    }
+            for(int i = 0; i < str.length(); i++){
+                freq[str.charAt(i)-'a']++;
+            }
+            for(int f : freq){
+                if(f > 0){
+                    min = Math.min(min, f);
+                    max = Math.max(max, f);
                 }
-                ans += (max - min);
+             }
+            //System.out.println(max+" min: "+ min);
+            ans += (max-min);
+
+        }
+        return ans;
+    }
+    public ArrayList<String> fun (String s){
+        ArrayList<String> list = new ArrayList<>();
+        for(int i = 0; i < s.length(); i++){
+            for(int j = i+1; j<=s.length(); j++){
+                if(j-i >= 3)
+                    list.add(s.substring(i,j));
             }
         }
-        
-        return ans;
+
+        //ArrayList<String> list = new ArrayList<>(set);
+        // for(int i = 0; i < set.size(); i++){
+        //     System.out.println(list.get(i));
+        // }
+        return list;
     }
 }
